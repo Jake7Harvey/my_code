@@ -1,0 +1,127 @@
+/* Reset and Basic Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    background-color: #F6F6F6;
+    font-family: "Lucida Console", "Lucida", monospace;
+    color: navy;
+}
+
+/*body {*/
+    /*background-image: url('LongLogo_Blk.png');  */
+    /*background-size: 60%;*/
+    /*background-position: center;*/
+    /*background-repeat: no-repeat;*/
+/*}*/
+
+/* Disable resizing on textareas */
+textarea {
+    resize: none;
+}
+
+/* Header Styling */
+header {
+    background-color: lightseagreen;
+    color: white;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+                rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+                rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+    text-align: center;
+    padding: 1rem;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+header h1 {
+    font-family: "Lucida Console", "Lucida", monospace;
+    font-size: 50px;
+    color: white;
+    text-shadow: 2px 2px 4px #000000;
+}
+
+/* Back Button Styling */
+.back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 1100;
+}
+
+.back-button img {
+    width: 40px;
+    height: auto;
+    cursor: pointer;
+}
+
+/* Centering the main section */
+main {
+    margin-top: 120px; /* Add space to avoid overlap with the header */
+    display: flex; /* Flexbox for aligning children */
+    justify-content: center; /* Center main content */
+}
+
+/* Styling the form container */
+section {
+    display: flex; /* Make section a flex container */
+    flex-direction: column; /* Vertical alignment */
+    width: 400px; /* Set a fixed width for the section */
+    padding: 20px; /* Padding for better spacing */
+    border: 1px solid #ccc; /* Border for the section */
+    background-color: #fff; /* White background */
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 10px; /* Soft shadow */
+    border-radius: 8px;
+}
+
+/* Form Group Styling */
+.form-group {
+    margin-bottom: 15px; /* Space between form elements */
+}
+
+label {
+    margin-bottom: 5px;
+    display: block;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+textarea,
+select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: inherit;
+}
+
+/* Button Styling */
+button {
+    padding: 10px;
+    background-color: lightseagreen;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    margin-top: 15px;
+}
+
+button:hover {
+    background-color: darkcyan;
+}
+
+/* Additional Styles for Mobile Responsiveness */
+@media (max-width: 600px) {
+    section {
+        width: 90%; /* Adjust width on smaller screens */
+    }
+}

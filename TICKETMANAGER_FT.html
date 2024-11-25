@@ -1,0 +1,106 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Outage Ticket Manager</title>
+    <link rel="stylesheet" href="C:\Users\jphar\OneDrive\Documents\EXXOELECTRICFINAL\TICKETMANAGER.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>Ticket Manager</h1>
+    </header>
+
+    <div class="container">  <!-- Container starts here -->
+        <div class="column" id="SeverePriority">
+            <h2 class="column-title">Severe Priority</h2>
+        </div>
+        <div class="column" id="ModeratePriority">
+            <h2 class="column-title">Moderate Priority</h2>
+        </div>
+        <div class="column" id="LowPriority">
+            <h2 class="column-title">Low Priority</h2>
+        </div>
+    </div>  <!-- Container ends here -->
+
+    <script>
+        function loadTickets() {
+            const tickets = JSON.parse(localStorage.getItem("ticketData")) || [];
+
+            // Clear the current lists before rendering new tickets
+            document.getElementById("SeverePriority").innerHTML = '<h2 class="column-title">Severe Priority</h2>';
+            document.getElementById("ModeratePriority").innerHTML = '<h2 class="column-title">Moderate Priority</h2>';
+            document.getElementById("LowPriority").innerHTML = '<h2 class="column-title">Low Priority</h2>';
+
+            tickets.forEach((ticket, index) => {
+                const ticketDiv = document.createElement("div");
+                ticketDiv.classList.add("ticket");
+
+                // Display ticket info
+                ticketDiv.innerHTML = `
+                    <h3>Ticket for ${ticket.address}</h3>
+                    <p><strong>Issue:</strong> ${ticket.issue}</p>
+                    <p><strong>Description:</strong> ${ticket.description}</p>
+                    <p><strong>Priority:</strong> ${ticket.priority}</p>
+                    <p><strong>Submitted by:</strong> ${ticket.email}</p>
+                    <p><strong>Submitted at:</strong> ${ticket.timestamp}</p>
+                    <p><strong>Status:</strong> <span id="status-${index}">${ticket.status || "Not Started"}</span></p>
+                    <button onclick="setInProgress(${index})">In Progress</button>
+                    <button onclick="completeTicket(${index})">Complete</button>
+                `;
+
+                // Append the ticket to the correct priority column
+                if (ticket.priority === "SeverePriority") {
+                    document.getElementById("SeverePriority").appendChild(ticketDiv);
+                } else if (ticket.priority === "ModeratePriority") {
+                    document.getElementById("ModeratePriority").appendChild(ticketDiv);
+                } else if (ticket.priority === "LowPriority") {
+                    document.getElementById("LowPriority").appendChild(ticketDiv);
+                }
+            });
+        }
+
+        // Function to mark a ticket as "In Progress"
+        function setInProgress(index) {
+            const tickets = JSON.parse(localStorage.getItem("ticketData")) || [];
+
+            if (tickets[index]) {
+                tickets[index].status = "In Progress";
+                localStorage.setItem("ticketData", JSON.stringify(tickets));
+                document.getElementById(`status-${index}`).textContent = "In Progress";
+            }
+        }
+
+        // Function to complete a ticket and remove it from the Ticket Manager
+        function completeTicket(index) {
+        const tickets = JSON.parse(localStorage.getItem("ticketData")) || [];
+
+        if (tickets[index]) {
+            const completedTicket = tickets.splice(index, 1)[0];
+        
+            // Store additional information for the completed ticket
+            completedTicket.completedBy = "Admin";  // Replace this with the actual name of the person completing the ticket
+            completedTicket.completedTimestamp = new Date().toISOString();
+
+            // Save the updated list back to localStorage
+            localStorage.setItem("ticketData", JSON.stringify(tickets));
+
+            // Optionally, save completed tickets elsewhere
+            let completedTickets = JSON.parse(localStorage.getItem("completedTickets")) || [];
+            completedTickets.push(completedTicket);
+            localStorage.setItem("completedTickets", JSON.stringify(completedTickets));
+
+            // Reload the tickets to update the page
+            loadTickets();
+        }
+}
+
+        // Load tickets when the page loads
+        window.onload = loadTickets;
+    </script>
+
+</body>
+</html>
